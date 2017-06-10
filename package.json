@@ -1,6 +1,6 @@
 {
   "name": "greek-capital-letters-remove-accent-on-caps",
-  "description": "a vuejs directive for removing accent from Greek Capital Letters Edit",
+  "description": "a vuejs directive for removing accent from Greek Capital Letters",
   "version": "1.0.0",
   "author": "Angelos Panagiotakis ( https://github.com/agelospanagiotakis )",
   "private": false,
