@@ -96,9 +96,12 @@ export default {
         if (this.userValue == this.retValue()){
           this.isCorrect = true;
         }
+
+        //notify other components that score changed!
+        this.$emit('ScoreChange', this.isCorrect);
+
         console.log("  this.retValue ",  this.retValue() );
         console.log("  this.userValue ",  this.userValue );
-
         console.log("  this.isCorrect ",  this.isCorrect );
 
         let class1 = 'alert alert-danger';

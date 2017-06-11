@@ -29,7 +29,7 @@
      <h4>Τεστ Ανθρώπινης Αριθμομηχανής</h4>
       <div class="panel panel-success">
         <h2>{{typeofpraxisStr}}</h2>
-        <praxis :typeofpraxis="activePraxis"></praxis>
+        <praxis :typeofpraxis="activePraxis" @ScoreChange="ScoreChanged($event)"></praxis>
       </div>
     <alert :show.sync="showModal" placement="top-right"   type="success" width="400px" dismissable>
       <span class="icon-ok-circled alert-icon-float-left"></span>
@@ -66,6 +66,14 @@ export default {
   },
   // define methods under the `methods` object
   methods: {
+    ScoreChanged: function (isCorrect) {
+      console.log("ScoreChange callled!",isCorrect);
+      if (isCorrect) {
+        this.totalScore +=1;
+      }else{
+        this.totalScore -=1;
+      }
+    },
     setPraxis: function (e,praxis) {
       console.log('changed praxis ' , e );
       console.log('debug here praxis' , praxis );
