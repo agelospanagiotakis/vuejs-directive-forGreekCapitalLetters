@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-  <asidebar :show.sync="showSideMenu" placement="left" header="Μενού" :width="350">
+  <asidebar :show="showSideMenu" @close="showSideMenu = false"   placement="left" header="Μενού" :width="350">
           <h4> Επιλέξτε τύπο παιγνιδιού : </h4>
            <div class="btn-group btn-group-vertical ">
                  <a class="btn btn-lg btn-default" :class="{ 'btn-primary' : activePraxis == '+' }"  @click="setPraxis(this,'+')">Πρόσθεση</a><br />
@@ -10,7 +10,7 @@
                  <a class="btn btn-lg btn-default" :class="{ 'btn-primary' : activePraxis == '/' }"   @click="setPraxis(this,'/')">Διαίρεση</a><br />
             </div>
     </asidebar>
-   <asidebar :show.sync="showSideMenu_Options" placement="right" header="Επιλογές" :width="350">
+   <asidebar   :show="showSideMenu_Options" @close="showSideMenu_Options = false"  placement="right" header="Επιλογές" :width="350">
               <h4> Ρύθμιση δυσκολίας: </h4>
                   μικρότερος αριθμός: 0 <br />
                   μέγιστος αριθμός:100 <br />
@@ -34,12 +34,13 @@
         <h2>{{typeofpraxisStr}}</h2>
         <praxis :typeofpraxis="activePraxis" @answerGiven="answered($event)"></praxis>
       </div>
+<!--
     <alert :show.sync="showModal" placement="top-right"   type="success" width="400px" dismissable>
       <span class="icon-ok-circled alert-icon-float-left"></span>
       <strong>{{ModalMsg}}</strong>
       <p></p>
     </alert>
-
+-->
   </div>
 </template>
 

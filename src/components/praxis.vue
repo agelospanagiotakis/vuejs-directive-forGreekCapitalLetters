@@ -83,6 +83,13 @@ export default {
         else if (this.typeofpraxis == '-') {
         res =  this.arithmos1 - this.arithmos2;
         }
+        else if (this.typeofpraxis == '*') {
+            res =  this.arithmos1 * this.arithmos2;
+          }
+        else if (this.typeofpraxis == '/') {
+              res =  this.arithmos1 / this.arithmos2;
+        }
+        
         this.Hint =  res;
         return res;
       },
@@ -136,6 +143,7 @@ this.oldcalcsStr += "<span class='use-digital-font'>";
           this.oldcalcsStr +=  "&nbsp;  "  + this.arithmos1 + " " + this.typeofpraxis + " " + this.arithmos2 + "   = " +  this.retValue() + " και όχι "  + this.userValue ;
         }
         this.oldcalcsStr += "</span>";
+
         this.oldcalcsStr += "</div>";
         this.oldcalcsStr += "</div>";
         this.oldcalcsStr += "</div>";
