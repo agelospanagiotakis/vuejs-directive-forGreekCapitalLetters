@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import removegreekaccent from './directives/removegreekaccent'
+//Vue.directive('removegreekaccent', removegreekaccent)
 
-Vue.directive('removegreekaccent', removegreekaccent)
-
-new Vue({
+  const app = new Vue({
   el: '#app',
-  render: h => h(App)
-})
+   render: h => h(App)
+  });

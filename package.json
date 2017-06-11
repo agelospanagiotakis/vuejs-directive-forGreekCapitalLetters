@@ -1,16 +1,19 @@
 {
-  "name": "greek-capital-letters-remove-accent-on-caps",
-  "description": "a vuejs directive for removing accent from Greek Capital Letters",
+  "name": "arithmeticgame",
+  "description": "a vuejs game for kids to learn arithmetics",
   "version": "1.0.0",
   "author": "Angelos Panagiotakis ( https://github.com/agelospanagiotakis )",
-  "private": false,
+  "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.1.1",
     "vue": "^2.3.3",
-    "jquery": "^3.1.1"
+    "vue-strap": "^1.1.37"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
