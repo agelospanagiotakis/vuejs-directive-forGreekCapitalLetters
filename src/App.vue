@@ -19,7 +19,11 @@
     <div class="pull-right">
       <div class="totalScore pull-right">
         Σκόρ : {{totalScore}}
+
       </div>
+        <div v-show="countAnswers > 0" class="ScoreCountedAnswers pull-right">
+          {{countCorrectAnswers}} σωστές στις  {{countAnswers}}
+        </div>
         <div class="btnActions">
           <button  class="btn btn-danger"  v-on:click="debugAction">Debug</button>
           <button class="btn btn-success"  @click="showSideMenu =  !showSideMenu">Μενού</button>
@@ -29,7 +33,7 @@
      <h4>Τεστ Ανθρώπινης Αριθμομηχανής</h4>
       <div class="panel panel-success">
         <h2>{{typeofpraxisStr}}</h2>
-        <praxis :typeofpraxis="activePraxis" @ScoreChange="ScoreChanged($event)"></praxis>
+        <praxis :typeofpraxis="activePraxis" @answerGiven="answered($event)"></praxis>
       </div>
     <alert :show.sync="showModal" placement="top-right"   type="success" width="400px" dismissable>
       <span class="icon-ok-circled alert-icon-float-left"></span>
@@ -58,6 +62,10 @@ export default {
       typeofpraxisStr : 'Πρόσθεση',
       activePraxis: '+',
       totalScore: 0,
+      countAnswers : 0,
+      countCorrectAnswers : 0,
+      scoreChangeIncrement : 10,
+      scoreChangeDecrement : 1,
       ModalMsg : '',
       showModal: false,
       showSideMenu: false,
@@ -66,13 +74,17 @@ export default {
   },
   // define methods under the `methods` object
   methods: {
-    ScoreChanged: function (isCorrect) {
-      console.log("ScoreChange callled!",isCorrect);
+    answered: function (isCorrect) {
+      console.log("answered was callled!",isCorrect);
+      this.countAnswers +=1;
       if (isCorrect) {
-        this.totalScore +=1;
+        this.totalScore += this.scoreChangeIncrement;
+        this.countCorrectAnswers +=1;
       }else{
-        this.totalScore -=1;
+        this.totalScore -= this.scoreChangeDecrement;
       }
+
+
     },
     setPraxis: function (e,praxis) {
       console.log('changed praxis ' , e );
@@ -104,6 +116,12 @@ export default {
   margin-top: 60px;
 }
 .totalScore{
+  font-size:20px;
+  font-weight: bolder;
+  padding-left :20px;
+  padding-right :20px;
+}
+.ScoreCountedAnswers{
   font-size:20px;
   font-weight: bolder;
   padding-left :20px;

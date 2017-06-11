@@ -98,7 +98,7 @@ export default {
         }
 
         //notify other components that score changed!
-        this.$emit('ScoreChange', this.isCorrect);
+        this.$emit('answerGiven', this.isCorrect);
 
         console.log("  this.retValue ",  this.retValue() );
         console.log("  this.userValue ",  this.userValue );
