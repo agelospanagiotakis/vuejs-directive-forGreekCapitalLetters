@@ -7,28 +7,30 @@
           <div class='col-xs-5'>
                   <div class='row'>
                         <div class='col-xs-5 pull-left'></div>
-                        <div class='col-xs-7 pull-right'>{{this.arithmos1}}</div>
+                        <div class='col-xs-7 pull-right text-align-right use-digital-font'>{{this.arithmos1}}</div>
                   </div>
                       <div class='row'>
                           <div class='col-xs-5 pull-left'></div>
-                          <div class='col-xs-7 pull-right'>{{this.typeofpraxis}} {{this.arithmos2}}</div>
+                          <div class='col-xs-7 pull-right use-digital-font text-align-right'>{{this.typeofpraxis}} {{this.arithmos2}}</div>
                       </div>
-                        <div class='row'>
-                            <div class='col-xs-5 pull-left'><label>Δώστε εκτίμηση </label></div>
-                            <div class='col-xs-2'>
-                              <input  class="form-control" type="'number" v-model="userValue" />
-                            </div>
-                            <div class='col-xs-2 '>
-                              <div show="showHint"> {{Hint}}</div>
-                            </div>
-                            <div class='col-xs-3'>
-                            <button class="btn btn-sm btn-warning" @click="doPraxis">Σωστό;</button>
+                        <div class='row vcenter'>
+                            <div class='col-xs-5 vcenter'><label class="vcenter text-align-right">Δώστε εκτίμηση :</label></div>
+                            <div class='col-xs-7'>
+                              <input  class="pull-left form-control text-align-right use-digital-font-input" type="'number" v-model="userValue" />
+                              <button class="pull-right  btn btn-sm btn-warning btn-inline" @click="doPraxis"><i class="fa fa-check"></i> &nbsp; Ελεγχος</button>
                             </div>
                           </div>
+                          <div class='row'>
+                            <div class='col-xs-5'>
+                            </div>
+                            <div class='col-xs-7'>
+                              <div show="showHint" class="pull-right text-align-right use-digital-font" style="display:inline-block">{{Hint}}</div>
+                              </div>
+                          </div>
             </div> <!-- col-xs-5 -->
-            <div class='col-xs-7'>
+            <div class='col-xs-7' v-show="this.oldcalcs.length > 0">
                   Παλιές πράξεις
-                  <div  v-html="this.oldcalcs"></div>
+                  <div  v-html="this.oldcalcsStr"></div>
             </div>
           </div> <!-- end  row -->
 
@@ -54,7 +56,8 @@ export default {
         Hint: 0,
         userValue:0,
         isCorrect:false,
-        oldcalcs:''
+        oldcalcsStr:'',
+        oldcalcs : []
       }
     },
     created: function () {
@@ -104,29 +107,38 @@ export default {
         console.log("  this.userValue ",  this.userValue );
         console.log("  this.isCorrect ",  this.isCorrect );
 
-        let class1 = 'alert alert-danger';
+        let class1 = 'alert-danger';
         if (this.isCorrect){
-          class1 = 'alert alert-success';
+          class1 = 'alert-success';
         }
+        this.oldcalcs.push({
+          arithmos1 : this.arithmos1,
+          typeofpraxis : this.typeofpraxis ,
+          arithmos2: this.arithmos2 ,
+          isCorrent: this.isCorrect
+        });
 
-        this.oldcalcs += "<div class='row " + class1 + " ' >";
-        this.oldcalcs += "<div class='col-xs-12'>";
-        this.oldcalcs += "<div class='pull-left'>";
+
+        this.oldcalcsStr += "<div class='row " + class1 + " ' >";
+        this.oldcalcsStr += "<div class='col-xs-12'>";
+        this.oldcalcsStr += "<div class='pull-left'>";
         if (this.isCorrect){
-          this.oldcalcs += "Σωστό! <i class='fa  fa-check-square-o '></i>";
+          this.oldcalcsStr += "<i class='fa  fa-check-square-o '></i> &nbsp; Σωστό!";
       }else {
-          this.oldcalcs += "Λάθος! <i class='fa  fa-remove '></i>";
+          this.oldcalcsStr += "<i class='fa  fa-remove '></i>  &nbsp;  Λάθος!";
       }
-        this.oldcalcs += "</div>";
+        this.oldcalcsStr += "</div>";
 
+this.oldcalcsStr += "<span class='use-digital-font'>";
         if (this.isCorrect){
-          this.oldcalcs += this.arithmos1 + " " + this.typeofpraxis + " " + this.arithmos2 + "   = " +    this.userValue ;
+          this.oldcalcsStr += "&nbsp;  "  + this.arithmos1 + " " + this.typeofpraxis + " " + this.arithmos2 + "   = " +    this.userValue ;
         } else {
-          this.oldcalcs += this.arithmos1 + " " + this.typeofpraxis + " " + this.arithmos2 + "   = " +  this.retValue() + " και όχι "  + this.userValue ;
+          this.oldcalcsStr +=  "&nbsp;  "  + this.arithmos1 + " " + this.typeofpraxis + " " + this.arithmos2 + "   = " +  this.retValue() + " και όχι "  + this.userValue ;
         }
-        this.oldcalcs += "</div>";
-        this.oldcalcs += "</div>";
-        this.oldcalcs += "</div>";
+        this.oldcalcsStr += "</span>";
+        this.oldcalcsStr += "</div>";
+        this.oldcalcsStr += "</div>";
+        this.oldcalcsStr += "</div>";
         console.log("  this.oldcalcs ",  this.oldcalcs );
 
         this.arithmos1 =  this.getRandom();

@@ -2,32 +2,31 @@
   <div id="app">
 
   <asidebar :show.sync="showSideMenu" placement="left" header="Μενού" :width="350">
-          <h2> Επιλέξτε τύπο παιγνιδιού : </h2>
+          <h4> Επιλέξτε τύπο παιγνιδιού : </h4>
            <div class="btn-group btn-group-vertical ">
                  <a class="btn btn-lg btn-default" :class="{ 'btn-primary' : activePraxis == '+' }"  @click="setPraxis(this,'+')">Πρόσθεση</a><br />
                  <a class="btn btn-lg btn-default" :class="{ 'btn-primary' : activePraxis == '-' }"   @click="setPraxis(this,'-')">Αφαίρεση</a><br />
                  <a class="btn btn-lg btn-default" :class="{ 'btn-primary' : activePraxis == '*' }"   @click="setPraxis(this,'*')">Πολλαπλασιασμός</a><br />
-                 <a class="btn btn-lg btn-default" :class="{ 'btn-primary' : activePraxis == '//' }"   @click="setPraxis(this,'/')">Διαίρεση</a><br />
+                 <a class="btn btn-lg btn-default" :class="{ 'btn-primary' : activePraxis == '/' }"   @click="setPraxis(this,'/')">Διαίρεση</a><br />
             </div>
     </asidebar>
+   <asidebar :show.sync="showSideMenu_Options" placement="right" header="Επιλογές" :width="350">
+              <h4> Ρύθμιση δυσκολίας: </h4>
+                  μικρότερος αριθμός: 0 <br />
+                  μέγιστος αριθμός:100 <br />
+    </asidebar>
 
-      <asidebar :show.sync="showSideMenu_Options" placement="right" header="Επιλογές" :width="350">
-              <h2> Ρύθμιση δυσκολιας: </h2>
-                  min 0
-                  max 100
-        </asidebar>
     <div class="pull-right">
       <div class="totalScore pull-right">
-        Σκόρ : {{totalScore}}
-
+        Σκόρ : <span class="use-digital-font"> {{totalScore}} </span>
       </div>
         <div v-show="countAnswers > 0" class="ScoreCountedAnswers pull-right">
           {{countCorrectAnswers}} σωστές στις  {{countAnswers}}
         </div>
         <div class="btnActions">
           <button  class="btn btn-danger"  v-on:click="debugAction">Debug</button>
-          <button class="btn btn-success"  @click="showSideMenu =  !showSideMenu">Μενού</button>
-          <button class="btn btn-warning"  @click="showSideMenu_Options = !showSideMenu_Options">Ρυθμίσεις</button>
+          <button class="btn btn-success"  @click="showMenu">Μενού</button>
+          <button class="btn btn-warning"  @click="showOptions">Ρυθμίσεις</button>
     </div>
   </div>
      <h4>Τεστ Ανθρώπινης Αριθμομηχανής</h4>
@@ -86,6 +85,12 @@ export default {
 
 
     },
+    showMenu(){
+      this.showSideMenu =  true;
+    },
+    showOptions(){
+      this.showSideMenu_Options =  true;
+    },
     setPraxis: function (e,praxis) {
       console.log('changed praxis ' , e );
       console.log('debug here praxis' , praxis );
@@ -109,9 +114,8 @@ export default {
 </script>
 <style>
 #app {
-  font-family: 'Roboto';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Roboto', sans-serif;
+  /* font-family: 'Roboto Condensed', sans-serif; */
   color: #2c3e50;
   margin-top: 60px;
 }
@@ -129,5 +133,39 @@ export default {
 }
 .btnActions{
 display: inline-block;
+}
+
+
+@font-face{
+ font-family:'digital-clock-font';
+ src: url('/src/assets/fonts/DIGITALDREAM.ttf');
+}
+.use-digital-font{
+font-family:'digital-clock-font';
+color:white;
+background-color:  black;
+padding-top:5px;
+padding-bottom:5px;
+padding-left:5px;
+padding-right:5px;
+}
+.btn-inline{
+  display: inline-block;
+}
+.use-digital-font-input {
+  font-family:'digital-clock-font';
+  color:white;
+  background-color:  grey;
+  width:105%;
+  display: inline-block;
+padding-left: 0px;
+padding-right: 0px;
+}
+.text-align-right {
+  text-align:right;
+}
+
+.vcenter{
+  vertical-align: middle;
 }
 </style>
