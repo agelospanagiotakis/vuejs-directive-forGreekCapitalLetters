@@ -5,37 +5,33 @@
   -->
   <div class='row'>
           <div class='col-xs-5'>
-              <div class='row'>
-                  <div class='col-xs-5 pull-left'>Αριθμός 1 :</div>
-                  <div class='col-xs-7 pull-right'>{{this.arithmos1}}</div>
-              </div>
-              <div class='row'>
-                  <div class='col-xs-5 pull-left'>Αριθμός2:</div>
-                  <div class='col-xs-7 pull-right'>{{this.typeofpraxis}} {{this.arithmos2}}</div>
-              </div>
-              <div class='row'>
-              <div class='col-xs-5 pull-left'><label>Δώσε μαντεψιά </label></div>
-              <div class='col-xs-5 pull-left'><input  class="form-control" type="'number" v-model="userValue" /></div>
-              <button class="vue-btn" @click="doPraxis">Πες μου αν είναι σωστό!</button>
-              </div>
-            </div>
+                  <div class='row'>
+                        <div class='col-xs-5 pull-left'></div>
+                        <div class='col-xs-7 pull-right'>{{this.arithmos1}}</div>
+                  </div>
+                      <div class='row'>
+                          <div class='col-xs-5 pull-left'></div>
+                          <div class='col-xs-7 pull-right'>{{this.typeofpraxis}} {{this.arithmos2}}</div>
+                      </div>
+                        <div class='row'>
+                            <div class='col-xs-5 pull-left'><label>Δώστε εκτίμηση </label></div>
+                            <div class='col-xs-2'>
+                              <input  class="form-control" type="'number" v-model="userValue" />
+                            </div>
+                            <div class='col-xs-2 '>
+                              <div show="showHint"> {{Hint}}</div>
+                            </div>
+                            <div class='col-xs-3'>
+                            <button class="btn btn-sm btn-warning" @click="doPraxis">Σωστό;</button>
+                            </div>
+                          </div>
+            </div> <!-- col-xs-5 -->
             <div class='col-xs-7'>
                   Παλιές πράξεις
                   <div  v-html="this.oldcalcs"></div>
             </div>
           </div> <!-- end  row -->
-    <div class='row'>
-        <div class='col-xs-12'>
 
-          <div v-if="isCorrect">
-                  <div class="bg-success">Σωστός!</div>
-          </div>
-          <div v-else>
-              <div class="bg-warning"   >Λάθος!</div>
-          </div>
-
-
-        </div>
     </div> <!-- end  row -->
 
 </div>
@@ -54,6 +50,8 @@ export default {
       return {
         arithmos1: 0,
         arithmos2: 0,
+        showHint:true,
+        Hint: 0,
         userValue:0,
         isCorrect:false,
         oldcalcs:''
@@ -63,26 +61,30 @@ export default {
       //do something after mounting vue instance
       this.arithmos1 =  this.getRandom();
       this.arithmos2 =  this.getRandom();
+      this.Hint =  this.retValue();
       console.log("mounted changed number1",this.arithmos1);
       console.log("mounted changed number2",this.arithmos2);
     },
     computed: {
       UserInputIsInValid(){
         return !this.UserInputIsValid();
-      },
-      retValue() {
-        console.log("this.typeofpraxis",this.typeofpraxis);
-        if (this.typeofpraxis =='+') {
-          return this.arithmos2 + this.arithmos1;
-        }
-        else if (this.typeofpraxis == '-') {
-        return this.arithmos1 - this.arithmos2;
-        }
       }
     },
     methods: {
+      retValue() {
+        console.log("this.typeofpraxis",this.typeofpraxis);
+        let res = 0;
+        if (this.typeofpraxis =='+') {
+          res = this.arithmos2 + this.arithmos1;
+        }
+        else if (this.typeofpraxis == '-') {
+        res =  this.arithmos1 - this.arithmos2;
+        }
+        this.Hint =  res;
+        return res;
+      },
       UserInputIsValid() {
-        return (this.userValue == this.retValue);
+        return (this.userValue === this.retValue());
       },
        getRandom(){
          let min = 0;
@@ -91,10 +93,10 @@ export default {
        },
       doPraxis() {
         this.isCorrect = false;
-        if (this.userValue === this.retValue){
+        if (this.userValue == this.retValue()){
           this.isCorrect = true;
         }
-        console.log("  this.retValue ",  this.retValue );
+        console.log("  this.retValue ",  this.retValue() );
         console.log("  this.userValue ",  this.userValue );
 
         console.log("  this.isCorrect ",  this.isCorrect );
@@ -117,7 +119,7 @@ export default {
         if (this.isCorrect){
           this.oldcalcs += this.arithmos1 + " " + this.typeofpraxis + " " + this.arithmos2 + "   = " +    this.userValue ;
         } else {
-          this.oldcalcs += this.arithmos1 + " " + this.typeofpraxis + " " + this.arithmos2 + "   = " +    this.retValue + " όχι "  + this.userValue ;
+          this.oldcalcs += this.arithmos1 + " " + this.typeofpraxis + " " + this.arithmos2 + "   = " +  this.retValue() + " και όχι "  + this.userValue ;
         }
         this.oldcalcs += "</div>";
         this.oldcalcs += "</div>";
@@ -126,6 +128,7 @@ export default {
 
         this.arithmos1 =  this.getRandom();
         this.arithmos2 =  this.getRandom();
+        this.Hint =  this.retValue();
     }
   }
 }
